@@ -1,5 +1,5 @@
 class Api::V1::EventsController < ApplicationController
-  before_action :set_event, only: %i[ show update destroy ]
+  before_action :set_event, only: %i[ show update destroy participants]
 
   # GET /api/v1/events
   def index
@@ -10,13 +10,7 @@ class Api::V1::EventsController < ApplicationController
 
   # GET /api/v1/events/1
   def show
-    if @current_user.is_admin 
-      @participants = @event.participants
-    else
-      @participants = @event.participants.where(locality: @current_user.locality)
-    end
-
-    render json: { :evemt => @event, :participants => @participants}
+    render json: @event
   end
 
   # POST /api/v1/events
@@ -56,6 +50,24 @@ class Api::V1::EventsController < ApplicationController
 
   def remove_participant
     Appointment.where(participant_id: params[:participant_id], event_id: params[:event_id]).destroy_all
+  end
+
+  
+  def participants
+    if @current_user.is_admin 
+      @participants = @event.participants
+    else
+      @participants = @event.participants.where(locality: @current_user.locality)
+    end
+
+    render json: @participants
+  end
+
+
+  def search
+    @events = Event.filtered_by_search(params[:query])
+
+    render json: @events
   end
 
 
