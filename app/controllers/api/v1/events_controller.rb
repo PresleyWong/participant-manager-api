@@ -1,5 +1,5 @@
 class Api::V1::EventsController < ApplicationController
-  before_action :set_event, only: %i[ show update destroy participants]
+  before_action :set_event, only: %i[ show update destroy participants add_participant remove_participant]
 
   # GET /api/v1/events
   def index
@@ -40,7 +40,9 @@ class Api::V1::EventsController < ApplicationController
 
 
   def add_participant
-    @appointment = Appointment.new(participant_id: params[:participant_id], event_id: params[:event_id], user_id: @current_user.id)
+    # @appointment = Appointment.new(participant_id: params[:participant_id], event_id: params[:event_id], user_id: @current_user.id)
+    @appointment = @event.appointments.new(participant_id: params[:participant_id], user_id: @current_user.id)
+
     if @appointment.save
       render json: @appointment, status: :created
     else
@@ -49,7 +51,9 @@ class Api::V1::EventsController < ApplicationController
   end
 
   def remove_participant
-    Appointment.where(participant_id: params[:participant_id], event_id: params[:event_id]).destroy_all
+    @appointment = @event.appointments.where(participant_id: params[:participant_id])
+    @appointment.destroy_all
+    # Appointment.where(participant_id: params[:participant_id], event_id: params[:event_id]).destroy_all
   end
 
   

@@ -39,3 +39,5 @@ request. A Token can be acquired from the Login view above.
 - [Delete An Event] : `DELETE /api/v1/events/:id`
 - [Search Event] : `Get /api/v1/events/search?query=:keyword`
 - [Get Event's Participants] : `GET /api/v1/events/:event_id/participants`
+- [Add Participant to Event] : `POST /api/v1/remove_participant/:event_id/:participant_id`
+- [Remove Participant from Event] : `DELETE /api/v1/remove_participant/:event_id/:participant_id`
