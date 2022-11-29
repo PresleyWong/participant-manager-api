@@ -1,24 +1,40 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Open Endpoints
 
-Things you may want to cover:
+Open endpoints require no Authentication.
 
-* Ruby version
+- [Login] : `POST /api/v1/auth/login`
 
-* System dependencies
+## Endpoints that require Authentication
 
-* Configuration
+Closed endpoints require a valid Token to be included in the header of the
+request. A Token can be acquired from the Login view above.
 
-* Database creation
+### User related
 
-* Database initialization
+- [Get An User] : `GET /api/v1/users/:id`
+- [Get Users] : `GET /api/v1/users`
+- [Create User] : `POST /api/v1/users`
+- [Update An User] : `PUT /api/v1/users/:id`
+- [Deleta An User] : `DELETE /api/v1/users/:id`
 
-* How to run the test suite
+### Participant related
 
-* Services (job queues, cache servers, search engines, etc.)
+- [Get A Participant] : `GET /api/v1/participants/:id`
+- [Get Participants] : `Get /api/v1/participants`
+- [Create Participant] : `POST /api/v1/participants`
+- [Update An Participant] : `PUT /api/v1/participants/:id:`
+- [Delete An Participant] : `DELETE /api/v1/participants/:id`
+- [Search Participant] : `Get /api/v1/participants/search?query=:keyword`
+- [Get Participant's Events] : `GET /api/v1/participants/:participant_id/events`
 
-* Deployment instructions
+### Event related
 
-* ...
+- [Get An Event] : `GET /api/v1/events/:id`
+- [Get Events] : `Get /api/v1/events`
+- [Create Event] : `POST /api/v1/events`
+- [Update An Event] : `PUT /api/v1/events/:id:`
+- [Delete An Event] : `DELETE /api/v1/events/:id`
+- [Search Event] : `Get /api/v1/events/search?query=:keyword`
+- [Get Event's Participants] : `GET /api/v1/events/:event_id/participants`
