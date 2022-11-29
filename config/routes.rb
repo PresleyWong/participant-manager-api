@@ -1,9 +1,29 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do      
-      resources :events
-      resources :users
+
+      resources :users do
+        member do
+          get :appointments
+        end
+      end
+
+      resources :events do
+        member do
+          get :participants
+        end
+
+        collection do
+          get :search
+        end
+      end
+
+      
       resources :participants do
+        member do
+          get :events
+        end
+
         collection do
           get :search
         end

@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   skip_before_action :authenticate_user, only: [:create]
-  before_action :set_user, only: %i[ show update destroy ]
+  before_action :set_user, only: %i[ show update destroy appointments]
 
   # GET /users
   def index
@@ -37,6 +37,15 @@ class Api::V1::UsersController < ApplicationController
   def destroy
     @user.destroy
   end
+
+
+  def appointments
+    @appointments = @user.appointments
+
+    render json: @appointments
+  end
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

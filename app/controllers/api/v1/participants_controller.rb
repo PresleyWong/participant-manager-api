@@ -1,5 +1,5 @@
 class Api::V1::ParticipantsController < ApplicationController
-  before_action :set_participant, only: %i[ show update destroy ]
+  before_action :set_participant, only: %i[ show update destroy events]
 
   # GET /api/v1/participants
   def index
@@ -40,6 +40,13 @@ class Api::V1::ParticipantsController < ApplicationController
   # DELETE /api/v1/participants/1
   def destroy
     @participant.destroy
+  end
+
+  
+  def events
+      @events = @participant.events
+
+    render json: @events
   end
 
 

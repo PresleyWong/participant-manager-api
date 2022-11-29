@@ -18,6 +18,7 @@ request. A Token can be acquired from the Login view above.
 - [Create User] : `POST /api/v1/users`
 - [Update An User] : `PUT /api/v1/users/:id`
 - [Deleta An User] : `DELETE /api/v1/users/:id`
+- [Get Appointment Made By User] : `GET /api/v1/users/:user_id/appointments`
 
 ### Participant related
 
