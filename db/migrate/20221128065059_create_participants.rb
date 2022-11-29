@@ -4,7 +4,6 @@ class CreateParticipants < ActiveRecord::Migration[7.0]
       t.string :gender
       t.string :english_name
       t.string :chinese_name
-      t.string :combine_name
       t.string :email
       t.integer :phone, :limit => 8
       t.string :college

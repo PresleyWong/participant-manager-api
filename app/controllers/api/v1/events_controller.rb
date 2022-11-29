@@ -40,7 +40,6 @@ class Api::V1::EventsController < ApplicationController
 
 
   def add_participant
-    # @appointment = Appointment.new(participant_id: params[:participant_id], event_id: params[:event_id], user_id: @current_user.id)
     @appointment = @event.appointments.new(participant_id: params[:participant_id], user_id: @current_user.id)
 
     if @appointment.save
@@ -53,7 +52,6 @@ class Api::V1::EventsController < ApplicationController
   def remove_participant
     @appointment = @event.appointments.where(participant_id: params[:participant_id])
     @appointment.destroy_all
-    # Appointment.where(participant_id: params[:participant_id], event_id: params[:event_id]).destroy_all
   end
 
   

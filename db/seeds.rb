@@ -12,7 +12,6 @@ states = ["Kuala Lumpur", "Penang", "Selangor", "Johor", "Sarawak", "Sabah", "Me
         is_admin: admin_flag,
         english_name: Faker::Name.first_name,
         chinese_name: Faker::Name.last_name,
-        combine_name: Faker::Name.name 
     )
 
     Event.create(
@@ -28,7 +27,6 @@ end
     Participant.create(
         english_name: Faker::Name.first_name,
         chinese_name: Faker::Name.last_name,
-        combine_name: Faker::Name.name, 
         gender: ["Brother", "Sister"].sample ,
         language: "English",
         academic_year: Faker::Number.between(from: 1, to: 4),
