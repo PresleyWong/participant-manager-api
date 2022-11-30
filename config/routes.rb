@@ -30,8 +30,8 @@ Rails.application.routes.draw do
       end
 
       post '/auth/login', to: 'authentication#login'
-      post '/add_participant/:id/:participant_id', to: 'events#add_participant'
-      delete '/remove_participant/:id/:participant_id', to: 'events#remove_participant'
+      post '/events/:id/register/:participant_id', to: 'events#add_participant'
+      delete '/events/:id/unregister/:participant_id', to: 'events#remove_participant'
     end
   end
 
