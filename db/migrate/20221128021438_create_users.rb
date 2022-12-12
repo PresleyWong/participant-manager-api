@@ -5,8 +5,7 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :password_digest, null: false 
       t.boolean :is_admin, default: false
       t.string :locality, null: false
-      t.string :english_name
-      t.string :chinese_name
+      t.string :name
       t.timestamps
     end
 

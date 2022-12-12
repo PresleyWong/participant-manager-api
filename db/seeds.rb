@@ -1,7 +1,7 @@
-states = ["Kuala Lumpur", "Penang", "Selangor", "Johor", "Sarawak", "Sabah", "Melaka", "Perak"] 
+states = ["Johor", "Kedah", "Kelantan", "Kuala Lumpur", "Labuan", "Malacca", "Negeri Sembilan", "Pahang", "Penang", "Perak", "Perlis", "Putrajaya", "Sabah", "Sarawak", "Selangor", "Terengganu"] 
 
 
-10.times do |n|
+25.times do |n|
 
     n == 0 ? admin_flag = true : admin_flag = false
   
@@ -10,8 +10,7 @@ states = ["Kuala Lumpur", "Penang", "Selangor", "Johor", "Sarawak", "Sabah", "Me
         password: "123456",
         locality: states.sample,
         is_admin: admin_flag,
-        english_name: Faker::Name.first_name,
-        chinese_name: Faker::Name.last_name,
+        name: Faker::Name.first_name,
     )
 
     Event.create(
@@ -23,28 +22,28 @@ states = ["Kuala Lumpur", "Penang", "Selangor", "Johor", "Sarawak", "Sabah", "Me
     )
 end
 
-50.times do |n|
+100.times do |n|
     Participant.create(
         english_name: Faker::Name.first_name,
         chinese_name: Faker::Name.last_name,
         gender: ["Brother", "Sister"].sample ,
-        language: "English",
+        language: ["English", "Chinese"].sample,
         academic_year: Faker::Number.between(from: 1, to: 4),
         email: Faker::Internet.email,
         phone: Faker::Number.number(digits: 12),
-        remarks: Faker::Quote.yoda,
+        remarks: Faker::Lorem.sentence(word_count: 3),
         college: Faker::University.name,
         locality: states.sample
     )
 end
 
 
-200.times do |n|
+400.times do |n|
     suppress(Exception) do
         Appointment.create(
-            participant_id: Faker::Number.between(from: 1, to: 50), 
-            event_id: Faker::Number.between(from: 1, to: 10),
-            user_id: Faker::Number.between(from: 1, to: 10),
+            participant_id: Faker::Number.between(from: 1, to: 100), 
+            event_id: Faker::Number.between(from: 1, to: 25),
+            user_id: Faker::Number.between(from: 1, to: 25),
         )
     end     
 end

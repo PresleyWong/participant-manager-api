@@ -21,7 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_065400) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_appointments_on_event_id"
-    t.index ["participant_id", "event_id", "user_id"], name: "index_appointments_on_participant_id_and_event_id_and_user_id", unique: true
+    t.index ["participant_id", "event_id"], name: "index_appointments_on_participant_id_and_event_id", unique: true
     t.index ["participant_id"], name: "index_appointments_on_participant_id"
     t.index ["user_id"], name: "index_appointments_on_user_id"
   end
@@ -57,8 +57,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_065400) do
     t.string "password_digest", null: false
     t.boolean "is_admin", default: false
     t.string "locality", null: false
-    t.string "english_name"
-    t.string "chinese_name"
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true

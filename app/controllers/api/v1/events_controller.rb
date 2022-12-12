@@ -1,10 +1,14 @@
 class Api::V1::EventsController < ApplicationController
-  before_action :set_event, only: %i[ show update destroy participants add_participant remove_participant]
+  skip_before_action :authenticate_user, only: [:index]
+  before_action :set_event, only: %i[ show update destroy participants add_participant remove_participant participant_appointment]
 
   # GET /api/v1/events
   def index
-    @events = Event.all
-
+    if params[:limit].present?
+      @events = Event.limit(params[:limit]).order('created_at DESC')
+    else    
+      @events = Event.all.order('created_at DESC')
+    end
     render json: @events
   end
 
@@ -63,6 +67,13 @@ class Api::V1::EventsController < ApplicationController
     end
 
     render json: @participants
+  end
+
+
+  def participant_appointment
+      @appointment = @event.appointments.where(participant_id: params[:participant_id])
+      
+    render json: @appointment
   end
 
 
