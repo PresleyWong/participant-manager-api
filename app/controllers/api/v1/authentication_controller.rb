@@ -10,6 +10,8 @@ class Api::V1::AuthenticationController < ApplicationController
                             exp: time.strftime("%m-%d-%Y %H:%M"), 
                             email: @user.email, 
                             id: @user.id,
+                            locality: @user.locality,
+                            isAdmin: @user.is_admin,
                         }, status: :ok
         else
             render json: { errors: 'unauthorized' }, status: :unauthorized

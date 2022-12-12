@@ -7,6 +7,6 @@ class CreateAppointments < ActiveRecord::Migration[7.0]
       t.timestamps
     end
 
-    add_index :appointments, [:participant_id, :event_id, :user_id], unique: true
+    add_index :appointments, [:participant_id, :event_id], unique: true
   end
 end

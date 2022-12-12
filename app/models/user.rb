@@ -5,4 +5,9 @@ class User < ApplicationRecord
 
     validates :email, presence: true, uniqueness: true
     validates :password, presence: true
+
+    def as_json(options = {})
+        super.merge('updated_at' => self.updated_at.strftime("%F %I:%M %p"), 
+                    'created_at' => self.created_at.strftime("%F %I:%M %p"))
+    end
 end
