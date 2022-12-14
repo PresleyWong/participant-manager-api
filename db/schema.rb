@@ -28,25 +28,25 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_065400) do
 
   create_table "events", force: :cascade do |t|
     t.string "title", null: false
-    t.date "start_date"
-    t.date "end_date"
-    t.time "start_time"
-    t.time "end_time"
+    t.date "start_date", null: false
+    t.date "end_date", null: false
+    t.time "start_time", null: false
+    t.time "end_time", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "participants", force: :cascade do |t|
-    t.string "gender"
+    t.string "gender", null: false
     t.string "english_name"
     t.string "chinese_name"
     t.string "email"
     t.bigint "phone"
     t.string "college"
     t.integer "academic_year"
-    t.string "language"
+    t.string "language", null: false
     t.text "remarks"
-    t.string "locality"
+    t.string "locality", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_participants_on_email", unique: true
