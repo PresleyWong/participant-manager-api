@@ -4,9 +4,9 @@ class Api::V1::ParticipantsController < ApplicationController
   # GET /api/v1/participants
   def index
     if @current_user.is_admin
-      @participants = Participant.all.order('created_at DESC')
+      @participants = Participant.all.order('english_name ASC')
     else
-      @participants = Participant.where(:locality => @current_user.locality).order('created_at DESC')
+      @participants = Participant.where(:locality => @current_user.locality).order('english_name ASC')
     end
 
     render json: @participants
