@@ -70,7 +70,7 @@ class Api::V1::ParticipantsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def participant_params
       # params.fetch(:api_v1_participant, {})
-      params.permit(:gender, :english_name, :chinese_name, :email, :phone, :college, :academic_year, :language, :remarks, :locality)
+      params.permit(:gender, :english_name, :chinese_name, :email, :phone, :college, :academic_year, :locality)
     end
 
 end

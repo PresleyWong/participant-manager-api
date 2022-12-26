@@ -4,6 +4,8 @@ class CreateAppointments < ActiveRecord::Migration[7.0]
       t.references  :participant, null: false, foreign_key: true
       t.references  :event, null: false, foreign_key: true
       t.references  :user, null: false, foreign_key: true
+      t.string :language, null: false 
+      t.text :remarks
       t.timestamps
     end
 

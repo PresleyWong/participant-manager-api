@@ -18,6 +18,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_065400) do
     t.bigint "participant_id", null: false
     t.bigint "event_id", null: false
     t.bigint "user_id", null: false
+    t.string "language", null: false
+    t.text "remarks"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_appointments_on_event_id"
@@ -38,14 +40,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_065400) do
 
   create_table "participants", force: :cascade do |t|
     t.string "gender", null: false
-    t.string "english_name"
+    t.string "english_name", null: false
     t.string "chinese_name"
     t.string "email"
     t.bigint "phone"
     t.string "college"
     t.integer "academic_year"
-    t.string "language", null: false
-    t.text "remarks"
     t.string "locality", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

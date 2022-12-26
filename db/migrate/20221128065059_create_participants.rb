@@ -8,8 +8,6 @@ class CreateParticipants < ActiveRecord::Migration[7.0]
       t.integer :phone, :limit => 8
       t.string :college
       t.integer :academic_year
-      t.string :language, null: false 
-      t.text :remarks
       t.string :locality, null: false 
       t.timestamps
     end

@@ -42,23 +42,7 @@ class Api::V1::EventsController < ApplicationController
     @event.destroy
   end
 
-
-  def add_participant
-    @appointment = @event.appointments.new(participant_id: params[:participant_id], user_id: @current_user.id)
-
-    if @appointment.save
-      render json: @appointment, status: :created
-    else
-      render json: @appointment.errors, status: :unprocessable_entity
-    end
-  end
-
-  def remove_participant
-    @appointment = @event.appointments.where(participant_id: params[:participant_id])
-    @appointment.destroy_all
-  end
-
-  
+ 
   def participants
     if @current_user.is_admin 
       @participants = @event.participants
@@ -70,20 +54,12 @@ class Api::V1::EventsController < ApplicationController
   end
 
 
-  def participant_appointment
-      @appointment = @event.appointments.where(participant_id: params[:participant_id])
-      
-    render json: @appointment
-  end
-
-
   def search
     @events = Event.filtered_by_search(params[:query])
 
     render json: @events
   end
-
-
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.
