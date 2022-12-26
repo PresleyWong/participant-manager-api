@@ -12,6 +12,7 @@ class Api::V1::AuthenticationController < ApplicationController
                             id: @user.id,
                             locality: @user.locality,
                             isAdmin: @user.is_admin,
+                            name: @user.name,
                         }, status: :ok
         else
             render json: { errors: 'unauthorized' }, status: :unauthorized

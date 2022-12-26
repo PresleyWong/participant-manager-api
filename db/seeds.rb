@@ -2,9 +2,8 @@ states = ["Johor", "Kedah", "Kelantan", "Kuala Lumpur", "Labuan", "Malacca", "Ne
 
 
 25.times do |n|
-
     n == 0 ? admin_flag = true : admin_flag = false
-  
+      
     User.create(
         email: "test#{n+1}@gmail.com",
         password: "123456",
@@ -26,12 +25,10 @@ end
     Participant.create(
         english_name: Faker::Name.first_name,
         chinese_name: Faker::Name.last_name,
-        gender: ["Brother", "Sister"].sample ,
-        language: ["English", "Chinese"].sample,
+        gender: ["Brother", "Sister"].sample,        
         academic_year: Faker::Number.between(from: 1, to: 4),
         email: Faker::Internet.email,
         phone: Faker::Number.number(digits: 12),
-        remarks: Faker::Lorem.sentence(word_count: 3),
         college: Faker::University.name,
         locality: states.sample
     )
@@ -44,6 +41,8 @@ end
             participant_id: Faker::Number.between(from: 1, to: 100), 
             event_id: Faker::Number.between(from: 1, to: 25),
             user_id: Faker::Number.between(from: 1, to: 25),
+            language: ["English", "Chinese"].sample,
+            remarks: Faker::Lorem.sentence(word_count: 3),
         )
     end     
 end
