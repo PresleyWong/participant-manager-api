@@ -1,7 +1,6 @@
 class Api::V1::AppointmentsController < ApplicationController
     before_action :set_appointment, only: %i[update destroy]
     
-
     def create
         @appointment = Appointment.new(appointment_params) do |param|
             param.event_id = params[:event_id]
