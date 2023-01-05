@@ -1,4 +1,4 @@
-# fly.toml file generated for participant-manager on 2022-12-12T10:44:06+08:00
+# fly.toml file generated for participant-manager on 2022-12-27T13:27:22+08:00
 
 app = "participant-manager"
 kill_signal = "SIGINT"
