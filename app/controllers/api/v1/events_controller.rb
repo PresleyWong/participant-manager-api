@@ -1,6 +1,6 @@
 class Api::V1::EventsController < ApplicationController
   skip_before_action :authenticate_user, only: [:index]
-  before_action :set_event, only: %i[ show update destroy participants add_participant remove_participant participant_appointment]
+  before_action :set_event, only: %i[ show update destroy participants remove_attachments]
 
   # GET /api/v1/events
   def index
@@ -59,6 +59,14 @@ class Api::V1::EventsController < ApplicationController
 
     render json: @events
   end
+
+  # POST /api/v1/events/1/remove_attachments
+  def remove_attachments
+    @event.remove_attachments!
+    @event.save
+
+    render json: @events
+  end
   
 
   private
@@ -70,7 +78,7 @@ class Api::V1::EventsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def event_params
       # params.fetch(:api_v1_event, {})
-      params.permit(:title, :start_date, :end_date, :start_time, :end_time)
+      params.permit(:title, :start_date, :end_date, :start_time, :end_time, {attachments: []})
     end
 
 end
