@@ -1,4 +1,5 @@
 class Event < ApplicationRecord
+    mount_uploaders :attachments, AttachmentUploader
     has_many :appointments, dependent: :destroy
     has_many :participants, through: :appointments
 

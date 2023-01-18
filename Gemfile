@@ -16,6 +16,7 @@ gem "puma", "~> 5.0"
 
 # Use JWT gem for token-based authentication
 gem 'jwt'
+gem 'carrierwave'
 
 gem 'faker'
 
