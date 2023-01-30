@@ -20,6 +20,7 @@ class Api::V1::EventsController < ApplicationController
   # POST /api/v1/events
   def create
     @event = Event.new(event_params)
+    add_attachements_accordingly(@event)
 
     if @event.save
       render json: @event, status: :created
@@ -29,7 +30,9 @@ class Api::V1::EventsController < ApplicationController
   end
 
   # PATCH/PUT /api/v1/events/1
-  def update
+  def update    
+    add_attachements_accordingly(@event, TRUE)
+
     if @event.update(event_params)
       render json: @event
     else
@@ -61,8 +64,13 @@ class Api::V1::EventsController < ApplicationController
   end
 
   # POST /api/v1/events/1/remove_attachments
-  def remove_attachments
-    @event.remove_attachments!
+  def remove_attachments    
+    remain_files = @event.attachments
+    deleted_file = remain_files.delete_at(params[:file_index].to_i)
+    deleted_file.try(:remove!)
+    @event.attachments = remain_files
+
+    # @event.remove_attachments!
     @event.save
 
     render json: @events
@@ -78,7 +86,33 @@ class Api::V1::EventsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def event_params
       # params.fetch(:api_v1_event, {})
-      params.permit(:title, :start_date, :end_date, :start_time, :end_time, {attachments: []})
+      params.permit(:title, :start_date, :end_date, :start_time, :end_time)
+    end
+
+    def add_attachements_accordingly(event, overwrite = FALSE)
+      if (params[:attachments])
+        files = event.attachments 
+
+        existing_files = Array.new  
+        new_files = Array.new      
+        event.attachments.each { |x| existing_files << x.identifier }
+          
+        params[:attachments].each_with_index do |y, i|
+          if existing_files.include?(y.original_filename)
+            if overwrite
+              deleted_file = files.delete_at(i)
+              deleted_file.try(:remove!)
+              event.attachments = files
+              new_files << y
+            end
+          else
+            new_files << y
+          end
+        end
+       
+        files += new_files
+        event.attachments = files
+      end
     end
 
 end

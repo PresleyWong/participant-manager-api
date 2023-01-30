@@ -34,7 +34,7 @@ Rails.application.routes.draw do
       delete '/appointments/:id', to: 'appointments#destroy'
       put '/appointments/:id', to: 'appointments#update'
       get '/events/:event_id/participant_appointment/:participant_id', to: 'appointments#participant_appointment'
-      delete '/events/:id/remove_attachments', to: 'events#remove_attachments'
+      delete '/events/:id/remove_attachments/:file_index', to: 'events#remove_attachments'
     end
   end
 
