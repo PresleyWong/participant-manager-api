@@ -86,7 +86,7 @@ class Api::V1::EventsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def event_params
       # params.fetch(:api_v1_event, {})
-      params.permit(:title, :start_date, :end_date, :start_time, :end_time)
+      params.permit(:title, :start_date, :end_date, :start_time, :end_time, :is_closed, :is_archived)
     end
 
     def add_attachements_accordingly(event, overwrite = FALSE)
