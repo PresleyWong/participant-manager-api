@@ -50,12 +50,22 @@ class Api::V1::ParticipantsController < ApplicationController
   end
 
 
-  def search
-    if @current_user.is_admin 
-      @participants = Participant.filtered_by_admin(params[:query])
+  def search   
+    if @current_user.is_admin       
+      @participants = Participant.search_by_admin(params[:query])
     else
-      @participants = Participant.filtered_by_non_admin(params[:query], @current_user.locality)
+      @participants = Participant.search_by_non_admin(params[:query], @current_user.locality)
     end
+
+    # search_results = Participant.where("english_name ILIKE ?", "%#{params[:query]}%").or(Participant.where("chinese_name ILIKE ?", "%#{params[:query]}%")).and(Participant.where('locality IN (?)', @current_user.locality))    
+    # search_results.each do |item|
+    #   event_appointment = item.appointments.where(event_id: params[:event_id])       
+    #   if !event_appointment.empty?
+    #     @joined_search_results << (item.as_json.merge(event_appointment.first.slice("language","remarks").as_json))
+    #   else      
+    #     @joined_search_results << item.as_json
+    #   end
+    # end
 
     render json: @participants
   end
