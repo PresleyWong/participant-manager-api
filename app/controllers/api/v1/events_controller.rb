@@ -4,10 +4,15 @@ class Api::V1::EventsController < ApplicationController
 
   # GET /api/v1/events
   def index
-    if params[:limit].present?
-      @events = Event.limit(params[:limit]).order('created_at DESC')
+    if params[:limit].present?    
+        @events = Event.where(is_archived: FALSE).limit(params[:limit]).order('created_at DESC')
     else    
-      @events = Event.all.order('created_at DESC')
+      authenticate_user
+      if @current_user.is_admin 
+        @events = Event.order('created_at DESC')
+      else
+        @events = Event.where(is_archived: FALSE).order('created_at DESC')
+      end
     end
     render json: @events
   end
@@ -31,6 +36,18 @@ class Api::V1::EventsController < ApplicationController
 
   # PATCH/PUT /api/v1/events/1
   def update    
+    if params[:toggle]
+      case params[:toggle]
+      when "is_closed"
+        @event.is_closed = !@event.is_closed
+      when "is_archived"
+        @event.is_archived = !@event.is_archived
+      end
+
+      @event.save
+      return render json: @events
+    end
+
     add_attachements_accordingly(@event, TRUE)
 
     if @event.update(event_params)
