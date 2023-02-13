@@ -9,7 +9,7 @@ class Api::V1::EventsController < ApplicationController
     else    
       authenticate_user
       if @current_user.is_admin 
-        @events = Event.order('created_at DESC')
+        @events = Event.order('is_archived ASC, created_at DESC')
       else
         @events = Event.where(is_archived: FALSE).order('created_at DESC')
       end
