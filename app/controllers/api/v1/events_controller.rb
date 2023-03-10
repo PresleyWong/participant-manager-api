@@ -1,18 +1,13 @@
 class Api::V1::EventsController < ApplicationController
   skip_before_action :authenticate_user, only: [:index]
-  before_action :set_event, only: %i[ show update destroy participants remove_attachments]
+  before_action :set_event, only: %i[show update destroy participants remove_attachments]
 
   # GET /api/v1/events
   def index
     if params[:limit].present?    
-        @events = Event.where(is_archived: FALSE).limit(params[:limit]).order('created_at DESC')
+      @events = Event.where(is_archived: FALSE).limit(params[:limit]).order('created_at DESC')
     else    
-      authenticate_user
-      if @current_user.is_admin 
-        @events = Event.order('is_archived ASC, created_at DESC')
-      else
-        @events = Event.where(is_archived: FALSE).order('created_at DESC')
-      end
+      @events = Event.where(is_archived: FALSE).order('created_at DESC')      
     end
     render json: @events
   end
@@ -74,12 +69,6 @@ class Api::V1::EventsController < ApplicationController
   end
 
 
-  def search
-    @events = Event.filtered_by_search(params[:query])
-
-    render json: @events
-  end
-
   # POST /api/v1/events/1/remove_attachments
   def remove_attachments    
     remain_files = @event.attachments
@@ -90,6 +79,12 @@ class Api::V1::EventsController < ApplicationController
     # @event.remove_attachments!
     @event.save
 
+    render json: @events
+  end
+
+  # Get /api/v1/events/archive
+  def archive  
+    @events = Event.where(is_archived: TRUE).order('created_at DESC')  
     render json: @events
   end
   
