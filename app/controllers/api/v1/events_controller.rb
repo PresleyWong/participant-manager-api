@@ -9,7 +9,8 @@ class Api::V1::EventsController < ApplicationController
     else    
       @events = Event.where(is_archived: FALSE).order('created_at DESC')      
     end
-    render json: @events
+
+    render json: include_attachments(@events, TRUE)
   end
 
   # GET /api/v1/events/1
@@ -19,10 +20,15 @@ class Api::V1::EventsController < ApplicationController
 
   # POST /api/v1/events
   def create
-    @event = Event.new(event_params)
-    add_attachements_accordingly(@event)
-
+    @event = Event.new(event_params.except(:attachments))        
     if @event.save
+
+      if (params[:attachments])          
+        params[:attachments].each do |file|
+          @event.attachments.attach(file)
+        end
+      end
+
       render json: @event, status: :created
     else
       render json: @event.errors, status: :unprocessable_entity
@@ -43,10 +49,10 @@ class Api::V1::EventsController < ApplicationController
       return render json: @events
     end
 
-    add_attachements_accordingly(@event, TRUE)
-
-    if @event.update(event_params)
-      render json: @event
+    add_attachements_accordingly(@event)
+    
+    if @event.update(event_params.except(:attachments))
+      render json: include_attachments(@event)
     else
       render json: @event.errors, status: :unprocessable_entity
     end
@@ -71,21 +77,15 @@ class Api::V1::EventsController < ApplicationController
 
   # POST /api/v1/events/1/remove_attachments
   def remove_attachments    
-    remain_files = @event.attachments
-    deleted_file = remain_files.delete_at(params[:file_index].to_i)
-    deleted_file.try(:remove!)
-    @event.attachments = remain_files
-
-    # @event.remove_attachments!
-    @event.save
-
-    render json: @events
+    attachments = ActiveStorage::Attachment.find(params[:file_index])
+    attachments.purge
+    render json: include_attachments(@event)
   end
 
   # Get /api/v1/events/archive
   def archive  
-    @events = Event.where(is_archived: TRUE).order('created_at DESC')  
-    render json: @events
+    @events = Event.where(is_archived: TRUE).order('created_at DESC')      
+    render json: include_attachments(@events, TRUE)
   end
   
 
@@ -97,34 +97,38 @@ class Api::V1::EventsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def event_params
-      # params.fetch(:api_v1_event, {})
-      params.permit(:title, :start_date, :end_date, :start_time, :end_time, :is_closed, :is_archived)
+      params.permit(:title, :start_date, :end_date, :start_time, :end_time, :is_closed, :is_archived, attachments: [])
     end
 
-    def add_attachements_accordingly(event, overwrite = FALSE)
-      if (params[:attachments])
-        files = event.attachments 
-
-        existing_files = Array.new  
-        new_files = Array.new      
-        event.attachments.each { |x| existing_files << x.identifier }
-          
-        params[:attachments].each_with_index do |y, i|
-          if existing_files.include?(y.original_filename)
-            if overwrite
-              deleted_file = files.delete_at(i)
-              deleted_file.try(:remove!)
-              event.attachments = files
-              new_files << y
-            end
-          else
-            new_files << y
-          end
+    def add_attachements_accordingly(event)
+      if (event_params[:attachments])          
+        event_params[:attachments].each do |file|
+          event.attachments.attach(file)
         end
-       
-        files += new_files
-        event.attachments = files
       end
+    end
+
+    def include_attachments(obj, multiple=FALSE)
+      if multiple
+          events_with_attachments = []
+          obj.each do |event|
+            events_with_attachments << event.as_json(include: :attachments).merge(
+              attachments: event.attachments.map do |file|
+                {"id" => file.id, "url" => url_for(file)}          
+              end
+              )
+          end       
+
+          return events_with_attachments
+      else
+        return (
+          obj.as_json(include: :attachments).merge(
+            attachments: obj.attachments.map do |file|
+            {"id" => file.id, "url" => url_for(file)}   
+          end )
+        )
+      end
+
     end
 
 end
