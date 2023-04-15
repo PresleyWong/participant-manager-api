@@ -31,3 +31,4 @@
 
 # Ignore attachments
 /public/uploads/*
+/config/application.yml

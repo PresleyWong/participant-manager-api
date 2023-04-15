@@ -85,6 +85,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_30_081632) do
     t.string "table_text_light_color"
     t.string "brother_text_light_color"
     t.string "sister_text_light_color"
+    t.string "input_border_light_color"
     t.string "header_bg_dark_color"
     t.string "header_text_dark_color"
     t.string "navbar_bg_dark_color"
@@ -113,6 +114,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_30_081632) do
     t.string "table_text_dark_color"
     t.string "brother_text_dark_color"
     t.string "sister_text_dark_color"
+    t.string "input_border_dark_color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["singleton_guard"], name: "index_settings_on_singleton_guard", unique: true

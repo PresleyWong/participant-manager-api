@@ -77,12 +77,14 @@ class Api::V1::SettingsController < ApplicationController
         :card_bg_dark_color, 
         :card_text_dark_color, 
         :table_header_bg_dark_color, 
-        :table_header_text_light_color,
+        :table_header_text_dark_color,
         :table_strip_odd_bg_dark_color,
         :table_strip_even_bg_dark_color, 
         :table_text_dark_color,
         :brother_text_dark_color,
         :sister_text_dark_color,
+        :input_border_light_color,
+        :input_border_dark_color,
         )
     end
 
