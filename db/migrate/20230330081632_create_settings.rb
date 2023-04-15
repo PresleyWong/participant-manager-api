@@ -31,6 +31,8 @@ class CreateSettings < ActiveRecord::Migration[7.0]
       t.string :table_text_light_color      
       t.string :brother_text_light_color
       t.string :sister_text_light_color
+      t.string :input_border_light_color
+
 
       t.string :header_bg_dark_color
       t.string :header_text_dark_color
@@ -60,7 +62,7 @@ class CreateSettings < ActiveRecord::Migration[7.0]
       t.string :table_text_dark_color
       t.string :brother_text_dark_color
       t.string :sister_text_dark_color
-
+      t.string :input_border_dark_color
 
       t.timestamps
     end

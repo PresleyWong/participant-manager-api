@@ -32,3 +32,10 @@ local:
 #   service: Mirror
 #   primary: local
 #   mirrors: [ amazon, google, microsoft ]
+
+cloudinary:
+  service: Cloudinary
+  folder: participant-manager-attachments
+  cloud_name: <%= ENV['cloud_name'] %>
+  api_key: <%= ENV['cloud_api_key'] %>
+  api_secret: <%= ENV['cloud_api_secret'] %>
