@@ -79,8 +79,6 @@ GEM
     debug (1.6.3)
       irb (>= 1.3.6)
       reline (>= 0.3.1)
-    dockerfile-rails (1.2.5)
-      rails
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     erubi (1.11.0)
@@ -187,7 +185,6 @@ DEPENDENCIES
   bootsnap
   cloudinary
   debug
-  dockerfile-rails (>= 1.2)
   faker
   jwt
   pg (~> 1.1)
@@ -197,7 +194,7 @@ DEPENDENCIES
   tzinfo-data
 
 RUBY VERSION
-   ruby 2.7.6p219
+   ruby 3.0.6p216
 
 BUNDLED WITH
-   2.1.4
+   2.2.33
