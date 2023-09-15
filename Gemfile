@@ -17,7 +17,7 @@ gem "puma", "~> 5.0"
 # Use JWT gem for token-based authentication
 gem 'jwt'
 gem 'cloudinary'
-gem 'nio4r', '2.5.8'
+gem 'nio4r', '2.5.9'
 gem 'faker'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
