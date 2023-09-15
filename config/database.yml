@@ -81,6 +81,9 @@ test:
 #
 production:
   <<: *default
-  database: participant_manager_production
-  username: participant_manager
-  password: <%= ENV["PARTICIPANT_MANAGER_DATABASE_PASSWORD"] %>
+  encoding: utf8
+  database: <%= ENV['RDS_DATABASE'] %>
+  username: <%= ENV['RDS_USERNAME'] %>
+  password: <%= ENV['RDS_PASSWORD'] %>
+  host: <%= ENV['RDS_HOST'] %>
+  port: 5432
