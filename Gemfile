@@ -11,9 +11,9 @@ gem "rails", "~> 7.0.3"
 gem "pg", "~> 1.1"
 
 # Use the Puma web server [https://github.com/puma/puma]
-# gem "puma", "6.3.1"
-# gem "nio4r", "2.5.9"
-gem "puma", "~> 5.0"
+gem "puma", "6.3.1"
+gem "nio4r", "2.5.9"
+# gem "puma", "~> 5.0"
 
 # Use JWT gem for token-based authentication
 gem 'jwt'
