@@ -1,5 +1,5 @@
 class Api::V1::EventsController < ApplicationController
-  # skip_before_action :authenticate_user, only: [:index]
+  skip_before_action :authenticate_user, only: [:index]
   before_action :set_event, only: %i[show update destroy participants remove_attachments]
 
   # GET /api/v1/events

@@ -1,5 +1,5 @@
 class Api::V1::SettingsController < ApplicationController
-  # skip_before_action :authenticate_user, only: [:show]
+  skip_before_action :authenticate_user, only: [:show]
   before_action :set_setting, only: %i[show update]
 
 
